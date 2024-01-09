@@ -1,2 +1,6 @@
 # mobile_app
-Q Study mobile application.
+
+A new Flutter project.
+
+## Getting Started
+
