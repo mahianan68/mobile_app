@@ -49,27 +49,36 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: SafeArea(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0.5,0.9],
+            colors: [
+            Color.fromARGB(255, 1, 62, 91),
+              Color.fromARGB(255, 0, 25, 37)
+            ],
+          ),
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-// hello world
-                const SizedBox(height: 10),
                 Image.asset(
-                  "assets/intro/intropic.png",
-                  width: 600,
-                  height: 200,
+                  "assets/images/qsw.png",
+                  width: 350,
+                  height: 300,
                 ),
-                const SizedBox(height: 10),
 
                 const Text(
-                  'dialogue goes here',
+                  'Log in',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -124,7 +133,7 @@ class LoginPageState extends State<LoginPage> {
                               _passwordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: Theme.of(context).primaryColorDark,
+                              color:Color.fromARGB(255, 35, 173, 4),
                             ),
                             onPressed: () {
                               // Update the state i.e. toogle the state of passwordVisible variable
@@ -157,7 +166,7 @@ class LoginPageState extends State<LoginPage> {
                         child: const Text(
                           "forgot password",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 255, 0, 0),
+                            color: Color.fromARGB(255, 35, 173, 4),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -172,14 +181,14 @@ class LoginPageState extends State<LoginPage> {
                   child: GestureDetector(
                     onTap: signIn,
                     child: Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 0, 0),
+                        color: const Color.fromARGB(255, 35, 173, 4),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
                         child: Text(
-                          'sign in',
+                          'Sign in',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -199,6 +208,7 @@ class LoginPageState extends State<LoginPage> {
                     const Text(
                       "don't have an account?",
                       style: TextStyle(
+                        color: Color.fromARGB(255, 35, 173, 4),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -210,7 +220,7 @@ class LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 255, 0, 0),
+                          color: Color.fromARGB(255, 255, 216, 0),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

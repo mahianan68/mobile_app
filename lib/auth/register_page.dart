@@ -85,25 +85,38 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
+      body: Container(
+
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0.5,0.9],
+            colors: [
+              Color.fromARGB(255, 1, 62, 91),
+              Color.fromARGB(255, 0, 25, 37)
+            ],
+          ),
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 // hello world
                 const SizedBox(height: 10),
                 Image.asset(
-                  "assets/intro/intropic.png",
-                  width: 400,
-                  height: 200,
+                  "assets/images/qsw.png",
+                  width: 350,
+                  height: 300,
                 ),
                 const SizedBox(height: 10),
                 const Text(
                   'Register below',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -149,30 +162,33 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: TextFormField(
-                      // keyboardType: TextInputType.text,
-                      controller: _passwordController,
-                      obscureText:
-                          !_passwordVisible, //This will obscure text dynamically
-                      decoration: InputDecoration(
-                        hintText: 'enter your password',
-                        border: InputBorder.none,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:20.0),
+                      child: TextFormField(
+                        // keyboardType: TextInputType.text,
+                        controller: _passwordController,
+                        obscureText:
+                            !_passwordVisible, //This will obscure text dynamically
+                        decoration: InputDecoration(
+                          hintText: 'enter your password',
+                          border: InputBorder.none,
 
-                        // Here is key idea
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            // Based on passwordVisible state choose the icon
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Theme.of(context).primaryColorDark,
+                          // Here is key idea
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color.fromARGB(255, 35, 173, 4)
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
-                          onPressed: () {
-                            // Update the state i.e. toogle the state of passwordVisible variable
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
                         ),
                       ),
                     ),
@@ -187,30 +203,33 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: _confirmpasswordcontroller,
-                      obscureText:
-                          !_passwordVisible, //This will obscure text dynamically
-                      decoration: InputDecoration(
-                        hintText: 'confirm your password',
-                        border: InputBorder.none,
+                    child: Padding(
+                  padding: const EdgeInsets.only(left:20.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: _confirmpasswordcontroller,
+                        obscureText:
+                            !_passwordVisible, //This will obscure text dynamically
+                        decoration: InputDecoration(
+                          hintText: 'confirm your password',
+                          border: InputBorder.none,
 
-                        // Here is key idea
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            // Based on passwordVisible state choose the icon
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Theme.of(context).primaryColorDark,
+                          // Here is key idea
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                                color: Color.fromARGB(255, 35, 173, 4)
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
-                          onPressed: () {
-                            // Update the state i.e. toogle the state of passwordVisible variable
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
                         ),
                       ),
                     ),
@@ -223,9 +242,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: GestureDetector(
                     onTap: signUp,
                     child: Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 0, 0),
+                        color: const Color.fromARGB(255, 35, 173, 4),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
@@ -250,14 +269,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       'Already Signed Up?',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 35, 173, 4)
                       ),
                     ),
                     GestureDetector(
                       onTap: widget.showLoginPage,
                       child: const Text(
-                        'Sign in',
+                        '  Sign in',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 255, 0, 0),
+                          color: Color.fromARGB(255, 255, 216, 0),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
