@@ -8,6 +8,17 @@ class IntroPage1 extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.5, 0.9],
+          colors: [
+            Color.fromARGB(255, 1, 62, 91),
+            Color.fromARGB(255, 0, 25, 37),
+          ],
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -15,24 +26,25 @@ class IntroPage1 extends StatelessWidget {
             height: 20,
           ),
           Image.asset(
-            "assets/intro/intropic.png",
-            height: 400,
-            width: .9 * width,
+            "assets/images/qsw.png",
+            height: 350,
+            width: 0.7 * width,
           ),
-          const Text("Introscreenone",
+         // SizedBox(height: 5),
+          const Text("Welcome to Q Study",
               style: TextStyle(
                   fontSize: 25,
-                  color: Color.fromARGB(255, 255, 0, 0),
+                  color: Colors.white,
                   fontWeight: FontWeight.bold)),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           const Text(
-              "Give some details here",
+              "Your one-stop university replacement center",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.black54,
+                color: Colors.white,
               )),
         ],
       ),

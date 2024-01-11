@@ -50,7 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     'Skip',
                     style: TextStyle(
                       fontSize: 25,
-                      color: Color.fromARGB(255, 255, 0, 0),
+                      color: Colors.amber,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Raleway',
                     ),
@@ -68,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       paintStyle: PaintingStyle.stroke,
                       strokeWidth: 1.5,
                       dotColor: Color.fromARGB(255, 255, 156, 156),
-                      activeDotColor: Color.fromARGB(255, 255, 0, 0)),
+                      activeDotColor: Colors.amber),
                 ),
                 //next
                 onLastScreen
@@ -87,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           'END',
                           style: TextStyle(
                             fontSize: 25,
-                            color: Color.fromARGB(255, 255, 0, 0),
+                            color: Colors.amber,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Raleway',
                           ),
@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           'NEXT',
                           style: TextStyle(
                             fontSize: 25,
-                            color: Color.fromARGB(255, 255, 0, 0),
+                            color: Colors.amber,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Raleway',
                           ),
