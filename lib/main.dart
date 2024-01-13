@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'intro_screens/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+import 'pages/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,8 +10,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -24,8 +23,12 @@ class MyApp extends StatelessWidget {
         // once Completed, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
+            title: 'Flutter Firestore CRUD',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
             debugShowCheckedModeBanner: false,
-            home: OnboardingScreen(),
+            home: HomePage(),
           );
         }
         return CircularProgressIndicator();
