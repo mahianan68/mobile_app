@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile_app/pages/home_page1.dart';
 import 'firebase_options.dart';
 
+import 'intro_screens/onboarding_screen.dart';
 import 'pages/home_page.dart';
 
 void main() {
@@ -28,7 +30,7 @@ final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: Defa
               primarySwatch: Colors.blue,
             ),
             debugShowCheckedModeBanner: false,
-            home: HomePage(),
+            home: OnboardingScreen(),
           );
         }
         return CircularProgressIndicator();

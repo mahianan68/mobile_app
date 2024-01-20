@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../pages/home_page1.dart';
 import '/pages/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password: _passwordController.text.trim(),
         );
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+            context, MaterialPageRoute(builder: (context) =>  HomePage()));
       } else {
         showDialog(
             context: context,
