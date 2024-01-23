@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'utils.dart';
 
@@ -10,9 +9,6 @@ class EventCal extends StatefulWidget {
 }
 
 class _EventCalState extends State<EventCal> {
-  final _formKey = GlobalKey<FormState>();
-  var name = "";
-  final nameController = TextEditingController();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -34,29 +30,23 @@ class _EventCalState extends State<EventCal> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
-    nameController.dispose();
+    _selectedEvents.dispose();
     super.dispose();
-  }
-
-  clearText() {
-    nameController.clear();
-  }
-
-  CollectionReference schedule =
-      FirebaseFirestore.instance.collection('schedule');
-
-  Future<void> addUser() {
-    return schedule
-        .add({'name': name,'settingDate':DateTime.now(),'selectedDate': _selectedDay})
-        .then((value) => print('schedule Added'))
-        .catchError((error) => print('Failed to Add user: $error'));
   }
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
     return events[day] ?? [];
   }
+
+  // List<Event> _getEventsForRange(DateTime start, DateTime end) {
+  //   // Implementation example
+  //   final days = daysInRange(start, end);
+  //
+  //   return [
+  //     for (final d in days) ..._getEventsForDay(d),
+  //   ];
+  // }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -68,6 +58,8 @@ class _EventCalState extends State<EventCal> {
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
         _selectedEvents.value = _getEventsForDay(selectedDay);
       });
+
+
     }
   }
 
@@ -80,6 +72,14 @@ class _EventCalState extends State<EventCal> {
       _rangeSelectionMode = RangeSelectionMode.toggledOn;
     });
 
+    // `start` or `end` could be null
+    // if (start != null && end != null) {
+    //   _selectedEvents.value = _getEventsForRange(start, end);
+    // } else if (start != null) {
+    //   _selectedEvents.value = _getEventsForDay(start);
+    // } else if (end != null) {
+    //   _selectedEvents.value = _getEventsForDay(end);
+    // }
   }
 
   @override
@@ -94,53 +94,27 @@ class _EventCalState extends State<EventCal> {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  backgroundColor: Color.fromARGB(255, 253, 224, 224),
                   scrollable: true,
                   title: Text("Set appointment"),
-                  content: Form(
-                    key: _formKey,
-                    child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: 'Name: ',
-                                labelStyle: TextStyle(fontSize: 20.0),
-                              ),
-                              controller: nameController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Name';
-                                }
-                                return null;
-                              },
-                            ),
-
-                            ElevatedButton(
-                                onPressed: () {
-                                  // Validate returns true if the form is valid, otherwise false.
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      name = nameController.text;
-                                      addUser();
-                                      clearText();
-                                    });
-                                  }
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => EventCal()));
-                                },
-                                child: Text("add"))
-                          ],
-                        )
+                  content: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: TextField(
+                      controller: _eventController,
                     ),
                   ),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          events.addAll({
+                            _selectedDay!: [Event(_eventController.text)]
+                          });
+                          Navigator.of(context).pop();
+                          _selectedEvents.value= _getEventsForDay(_selectedDay!);
+                        },
+                        child: Text("add"))
+                  ],
                 );
-              }
-              );
+              });
         },
         child: Icon(Icons.add),
       ),
