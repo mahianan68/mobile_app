@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             width: 250,
                             child: Text(
-                              'Airport Pickup Request',
+                              'Q study Event Calender',
                               style: TextStyle(
                                 fontSize: 25,
                               ),

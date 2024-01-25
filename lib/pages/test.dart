@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'apointmentlist.dart';
 import 'utils.dart';
 
-class EventCal extends StatefulWidget {
+class EventCal2 extends StatefulWidget {
   @override
-  _EventCalState createState() => _EventCalState();
+  _EventCal2State createState() => _EventCal2State();
 }
 
-class _EventCalState extends State<EventCal> {
+class _EventCal2State extends State<EventCal2> {
+  var name = "";
+
+  final nameController = TextEditingController();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -19,34 +23,69 @@ class _EventCalState extends State<EventCal> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  CollectionReference schedule = FirebaseFirestore.instance.collection('schedule');
 
   @override
   void initState() {
     super.initState();
-
+    _fetchEvents();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
+  Future<void> _fetchEvents() async {
+    final eventsSnapshot = await schedule.get();
+    final eventsData = eventsSnapshot.docs.map((doc) => doc.data());
 
+    // Convert Firestore data to Event objects
+    final events = eventsData.map((data) => Event(
+      title: data['name'],
+      date: (data['selectedDate'] as Timestamp).toDate(),
+    ));
+
+    setState(() {
+      // Update events map with fetched data
+      events.forEach((event) {
+        this.events[event.date] = [event];
+      });
+      _selectedEvents.value = _getEventsForDay(_selectedDay!);
+    });
+  }
+  Future<List<YourObject>> fetchData() async {
+    try {
+      QuerySnapshot querySnapshot = await collectionRef.get();
+      List<QueryDocumentSnapshot> docs = querySnapshot.docs;
+
+      // Convert each document to your object
+      List<YourObject> objectsList = docs.map((doc) => YourObject.fromDocument(doc)).toList();
+      return objectsList;
+    } catch (error) {
+      print('Error fetching data: $error');
+      return []; // Return an empty list if an error occurs
+    }
+  }
   @override
   void dispose() {
-    _selectedEvents.dispose();
+    // Clean up the controller when the widget is disposed.
+    nameController.dispose();
     super.dispose();
+  }
+
+  clearText() {
+    nameController.clear();
+  }
+
+
+  Future<void> addUser() {
+    return schedule
+        .add({'name': name,'settingDate':DateTime.now(),'selectedDate': _selectedDay})
+        .then((value) => print('schedule Added'))
+        .catchError((error) => print('Failed to Add user: $error'));
   }
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
     return events[day] ?? [];
   }
-
-  // List<Event> _getEventsForRange(DateTime start, DateTime end) {
-  //   // Implementation example
-  //   final days = daysInRange(start, end);
-  //
-  //   return [
-  //     for (final d in days) ..._getEventsForDay(d),
-  //   ];
-  // }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -58,8 +97,6 @@ class _EventCalState extends State<EventCal> {
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
         _selectedEvents.value = _getEventsForDay(selectedDay);
       });
-
-
     }
   }
 
@@ -72,52 +109,15 @@ class _EventCalState extends State<EventCal> {
       _rangeSelectionMode = RangeSelectionMode.toggledOn;
     });
 
-    // `start` or `end` could be null
-    // if (start != null && end != null) {
-    //   _selectedEvents.value = _getEventsForRange(start, end);
-    // } else if (start != null) {
-    //   _selectedEvents.value = _getEventsForDay(start);
-    // } else if (end != null) {
-    //   _selectedEvents.value = _getEventsForDay(end);
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TableCalendar - Events'),
+        title: Text('Apointment Calender'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  scrollable: true,
-                  title: Text("Set appointment"),
-                  content: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: TextField(
-                      controller: _eventController,
-                    ),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          events.addAll({
-                            _selectedDay!: [Event(_eventController.text)]
-                          });
-                          Navigator.of(context).pop();
-                          _selectedEvents.value= _getEventsForDay(_selectedDay!);
-                        },
-                        child: Text("add"))
-                  ],
-                );
-              });
-        },
-        child: Icon(Icons.add),
-      ),
+
       body: Column(
         children: [
           TableCalendar<Event>(
@@ -146,34 +146,10 @@ class _EventCalState extends State<EventCal> {
               _focusedDay = focusedDay;
             },
           ),
-          const SizedBox(height: 8.0),
-          Expanded(
-            child: ValueListenableBuilder<List<Event>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        color: Colors.deepOrange,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ListTile(
-                        onTap: () => print("works"),
-                        title: Text('${value[index]}'),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
+          ListStudentPage(),
+
+
+
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:crud/pages/update_student_page.dart';
 import 'package:intl/intl.dart';
 
+
 class ListStudentPage extends StatefulWidget {
   ListStudentPage({Key? key}) : super(key: key);
 
@@ -15,16 +16,6 @@ class _ListStudentPageState extends State<ListStudentPage> {
   final Stream<QuerySnapshot> scheduleStream =
       FirebaseFirestore.instance.collection('schedule').snapshots();
 
-  // CollectionReference schedule =
-  // FirebaseFirestore.instance.collection('schedule');
-  // Future<void> deleteUser(id) {
-  //   // print("User Deleted $id");
-  //   return schedule
-  //       .doc(id)
-  //       .delete()
-  //       .then((value) => print('User Deleted'))
-  //       .catchError((error) => print('Failed to Delete user: $error'));
-  // }
 
   @override
   Widget build(BuildContext context) {

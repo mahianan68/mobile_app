@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobile_app/pages/home_page1.dart';
+import 'package:mobile_app/pages/test.dart';
 import 'firebase_options.dart';
 
 import 'intro_screens/onboarding_screen.dart';
 import 'pages/apointmentlist.dart';
 import 'pages/home_page.dart';
+import 'pages/test2.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +33,7 @@ final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: Defa
               primarySwatch: Colors.blue,
             ),
             debugShowCheckedModeBanner: false,
-            home: ListStudentPage(),
+            home: EventCal2(),
           );
         }
         return CircularProgressIndicator();
