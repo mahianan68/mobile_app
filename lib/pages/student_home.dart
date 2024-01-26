@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/auth/auth_page.dart';
 import 'package:mobile_app/pages/eventcal.dart';
+import 'package:mobile_app/pages/student_registration.dart';
 import '/auth/login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,39 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: Color.fromARGB(255, 0, 25, 37),
+        title: Image.asset(
+          "assets/images/qsw.png",
+          height: 60,
+          width: 100,
+
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+
+
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right:20),
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 35, 173, 4),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            child: TextButton(
+                style: TextButton.styleFrom(
+                    fixedSize: const Size(120, 40)),
+                onPressed: signUserOut,
+                child: const Text(
+                  "Consultancy",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                )),
+          ),
+        ],
+      ),
       body: Container(
         alignment: AlignmentDirectional.center,
         decoration: const BoxDecoration(
@@ -39,39 +73,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: new EdgeInsets.only(top: 50.0, left: 10.0, right: 10.0),
-              alignment: AlignmentDirectional.topStart,
-              width: double.maxFinite,
-              height: 100,
-              decoration: const BoxDecoration(),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(
-                      "assets/images/qsw.png",
-                      height: 80,
-                      width: 100,
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 35, 173, 4),
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: TextButton(
-                          style: TextButton.styleFrom(
-                              fixedSize: const Size(120, 40)),
-                          onPressed: signUserOut,
-                          child: const Text(
-                            "Consultancy",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                            ),
-                          )),
-                    ),
-                  ]),
-            ),
+
             // Container(
             //   child : const Text("do you want to sign out "),
 
@@ -92,8 +94,10 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    margin: EdgeInsets.only(left:10,top:10),
+
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 225, 210, 210),
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     height: 25.0,
                     width: 100.0,
@@ -101,8 +105,8 @@ class _HomePageState extends State<HomePage> {
                     //hello button
                   ),
                   Container(
-                    height: 100.0,
-                    width: 400.0,
+                    height: 90.0,
+                    margin: EdgeInsets.only(left:10,right:10,bottom:5),
 
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 252, 252, 252),
@@ -124,9 +128,32 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               'Azizul Alam',
-                              style: TextStyle(fontSize: 30),
+                              style: TextStyle(fontSize: 20),
                             ),
-                            Text('32dsrg')
+                            Container(
+                              height: 35,
+                              padding: EdgeInsets.all(0),
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(0, 35, 173, 4),
+                                borderRadius: BorderRadius.all(Radius.circular(2)),
+                              ),
+                              child: TextButton(
+
+                                  onPressed:  () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => RegisterStudent()));
+                                  },
+                                  child: const Text(
+                                    "Complete profile",
+                                    style: TextStyle(
+
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  )),
+                            ),
                           ],
                         ),
                       ],
@@ -137,10 +164,8 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-
-            Container(
-              height: 600,
-              margin: EdgeInsets.all(10),
+             SizedBox(height:20),
+            Expanded(
               child: ListView(
                 // This next line does the trick.
                 children: <Widget>[
@@ -152,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                               builder: (context) => EventCal()));
                     },
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: EdgeInsets.only(left:10,right:10,bottom:5),
                       padding: EdgeInsets.only(left: 20),
                       height: 120,
                       decoration: const BoxDecoration(
@@ -193,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: EdgeInsets.only(left:10,right:10,bottom:5),
                       height: 120,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
@@ -236,6 +261,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Container(
                       padding:EdgeInsets.only(left: 20),
+                      margin: EdgeInsets.only(left:10,right:10,bottom:5),
                       height: 120,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
@@ -276,6 +302,22 @@ class _HomePageState extends State<HomePage> {
             // ElevatedButton(
             //     onPressed: () async {}, child: Text("Update Profile"))
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        height: 60,
+        padding:EdgeInsets.all(1),
+        child: Container(
+          color: Color.fromARGB(255, 35, 173, 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text("A"),
+              Text("B"),
+              Text("C"),
+              Text("D"),
+            ],
+          ),
         ),
       ),
     );

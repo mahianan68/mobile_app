@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mobile_app/pages/home_page1.dart';
+import 'package:mobile_app/pages/student_home.dart';
 import 'package:mobile_app/pages/test.dart';
 import 'firebase_options.dart';
 
 import 'intro_screens/onboarding_screen.dart';
+import 'pages/adminhome.dart';
 import 'pages/apointmentlist.dart';
 import 'pages/home_page.dart';
 import 'pages/test2.dart';
@@ -30,10 +31,10 @@ final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: Defa
           return MaterialApp(
             title: 'Flutter Firestore CRUD',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+
             ),
             debugShowCheckedModeBanner: false,
-            home: EventCal2(),
+            home: OnboardingScreen(),
           );
         }
         return CircularProgressIndicator();

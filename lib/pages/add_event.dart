@@ -3,7 +3,7 @@ import 'package:mobile_app/pages/home_page.dart';
 // import 'list_student_page.dart';
 import 'package:flutter/material.dart';
 
-import 'home_page1.dart';
+import 'student_home.dart';
 
 class AddEventPage extends StatefulWidget {
   AddEventPage({Key? key}) : super(key: key);
