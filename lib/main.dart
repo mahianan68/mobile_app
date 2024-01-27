@@ -8,7 +8,7 @@ import 'intro_screens/onboarding_screen.dart';
 import 'pages/adminhome.dart';
 import 'pages/apointmentlist.dart';
 import 'pages/home_page.dart';
-import 'pages/test2.dart';
+import 'pages/test.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

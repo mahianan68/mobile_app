@@ -5,6 +5,7 @@ import 'package:mobile_app/auth/auth_page.dart';
 import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/student_registration.dart';
 import '/auth/login_page.dart';
+import 'checkvisabox.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,16 +25,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        leadingWidth: 100,
+        toolbarHeight: 100,
         backgroundColor: Color.fromARGB(255, 0, 25, 37),
-        title: Image.asset(
+        leading: Image.asset(
           "assets/images/qsw.png",
-          height: 60,
-          width: 100,
 
           color: Color.fromARGB(255, 255, 255, 255),
         ),
-
 
         actions: [
           Container(
@@ -174,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EventCal()));
+                              builder: (context) => CheckVisaBox()));
                     },
                     child: Container(
                       margin: EdgeInsets.only(left:10,right:10,bottom:5),
@@ -306,16 +305,50 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 60,
-        padding:EdgeInsets.all(1),
+        padding: EdgeInsets.all(1),
         child: Container(
           color: Color.fromARGB(255, 35, 173, 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text("A"),
-              Text("B"),
-              Text("C"),
-              Text("D"),
+              IconButton(
+                icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage()));
+
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.home,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.notification_important_outlined,
+                  color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.exit_to_app_sharp
+                  ,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+
             ],
           ),
         ),

@@ -165,8 +165,8 @@ class _RegisterStudentState extends State<RegisterStudent> {
                 ),
                 languageCode: "en",
                 onChanged: (phone) {
-                  phoneController=phone.completeNumber;
-                  print(phone.completeNumber);
+                  // phoneController=phone.completeNumber;
+                  // print(phone.completeNumber);
                 },
                 onCountryChanged: (country) {
                   print('Country changed to: ' + country.name);
@@ -240,10 +240,44 @@ class _RegisterStudentState extends State<RegisterStudent> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text("A"),
-              Text("B"),
-              Text("C"),
-              Text("D"),
+              IconButton(
+                icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage()));
+
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.home,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.notification_important_outlined,
+                  color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.exit_to_app_sharp
+                  ,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+
             ],
           ),
         ),
