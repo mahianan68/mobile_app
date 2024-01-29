@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/pages/student_home.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -144,6 +145,56 @@ class _EventCalState extends State<EventCal> {
         },
         child: Icon(Icons.add),
       ),
+      bottomNavigationBar: BottomAppBar(
+        height: 60,
+        padding: EdgeInsets.all(1),
+        child: Container(
+          color: Color.fromARGB(255, 35, 173, 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage()));
+
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.home,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.notification_important_outlined,
+                  color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.exit_to_app_sharp
+                  ,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+
+            ],
+          ),
+        ),
+      ),
       body: Column(
         children: [
           TableCalendar<Event>(
@@ -157,6 +208,7 @@ class _EventCalState extends State<EventCal> {
             rangeSelectionMode: RangeSelectionMode.disabled,
             startingDayOfWeek: StartingDayOfWeek.saturday,
             calendarStyle: CalendarStyle(
+
               outsideDaysVisible: false,
             ),
             onDaySelected: _onDaySelected,

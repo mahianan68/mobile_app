@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/auth/login_page.dart';
 import 'package:mobile_app/pages/eventcal.dart';
 
+import '../auth/authmain.dart';
+import 'notifications.dart';
 import 'student_list.dart';
 
 class Ahome extends StatefulWidget {
@@ -189,16 +192,59 @@ class _AhomeState extends State<Ahome> {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 60,
-        padding:EdgeInsets.all(1),
+        padding: EdgeInsets.all(1),
         child: Container(
           color: Color.fromARGB(255, 35, 173, 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text("A"),
-              Text("B"),
-              Text("C"),
-              Text("D"),
+
+              IconButton(
+                icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => HomePage()));
+
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.question_mark_rounded,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  // Handle button press here
+                },
+
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.notification_important_outlined,
+                  color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NotiFications()));
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+              IconButton(
+                icon: Icon(Icons.exit_to_app_rounded
+                  ,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                onPressed:() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const MainPage();
+                      },
+                    ),
+                  );
+                },
+                iconSize: 36.0, // Optional icon size
+              ),
+
             ],
           ),
         ),

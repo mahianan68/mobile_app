@@ -6,6 +6,9 @@ import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/student_registration.dart';
 import '/auth/login_page.dart';
 import 'checkvisabox.dart';
+import 'faq.dart';
+import 'notifications.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +25,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+
+
+  {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
@@ -311,6 +317,7 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+
               IconButton(
                 icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
                 onPressed: () {
@@ -325,27 +332,26 @@ class _HomePageState extends State<HomePage> {
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(
-                icon: Icon(Icons.home,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                icon: Icon(Icons.question_mark_rounded,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
                 onPressed: () {
-                  // Handle button press here
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FaqS()));
                 },
-
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(
                 icon: Icon(Icons.notification_important_outlined,
                   color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
                 onPressed: () {
-                  // Handle button press here
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NotiFications()));
                 },
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(
-                icon: Icon(Icons.exit_to_app_sharp
+                icon: Icon(Icons.exit_to_app_rounded
                   ,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
-                onPressed: () {
-                  // Handle button press here
-                },
+                onPressed: signUserOut,
                 iconSize: 36.0, // Optional icon size
               ),
 

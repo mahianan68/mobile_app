@@ -1,68 +1,60 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// ignore_for_file: public_member_api_docs
-
-import 'dart:async';
-
+import 'package:accordion/accordion.dart';
+import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+/// Main example page
+class AccordionPage extends StatelessWidget //__
+    {
+  static const headerStyle = TextStyle(
+      color: Color(0xffffffff), fontSize: 18, fontWeight: FontWeight.bold);
+  static const contentStyleHeader = TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
+  static const contentStyle = TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
+  static const loremIpsum =
+  '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
+  static const slogan =
+      'Do not forget to play around with all sorts of colors, backgrounds, borders, etc.';
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool _hasCallSupport = false;
-  Future<void>? _launched;
-  String _phone = '';
-
-  @override
-
-
-  Future<void> _launchInBrowser(Uri url) async {
-    if (!await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $url');
-    }
-  }
+  const AccordionPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // onPressed calls using this URL are not gated on a 'canLaunch' check
-    // because the assumption is that every device can launch a web URL.
-    final Uri toLaunch =Uri(scheme: 'https', host: 'visa.educationmalaysia.gov.my', path: 'headers/');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+  build(context) => Scaffold(
+    backgroundColor: Colors.blueGrey[100],
+    appBar: AppBar(
+      title: const Text('Accordion'),
+    ),
+    body: Accordion(
+      headerBorderColor: Colors.blueGrey,
+      headerBorderColorOpened: Colors.transparent,
+      // headerBorderWidth: 1,
+      headerBackgroundColorOpened: Colors.green,
+      contentBackgroundColor: Colors.white,
+      contentBorderColor: Colors.green,
+      contentBorderWidth: 3,
+      contentHorizontalPadding: 20,
+      scaleWhenAnimating: true,
+      openAndCloseAnimation: true,
+      headerPadding:
+      const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+      sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
+      sectionClosingHapticFeedback: SectionHapticFeedback.light,
+      children: [
+        AccordionSection(
+          isOpen: true,
+          contentVerticalPadding: 20,
+          leftIcon:
+          const Icon(Icons.text_fields_rounded, color: Colors.white),
+          header: const Text('Simple Text', style: headerStyle),
+          content: const Text(loremIpsum, style: contentStyle),
+        ),
 
-              ElevatedButton(
-                onPressed: () => setState(() {
-                  _launched = _launchInBrowser(toLaunch);
-                }),
-                child: const Text('Launch in browser'),
-              ),
+      ],
+    ),
+  );
+} //__
 
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+
