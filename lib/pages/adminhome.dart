@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/auth/login_page.dart';
+import 'package:mobile_app/pages/addfaq.dart';
 import 'package:mobile_app/pages/eventcal.dart';
+import 'package:mobile_app/pages/faq2.dart';
 
 import '../auth/authmain.dart';
+import 'chat/chatbox.dart';
 import 'notifications.dart';
 import 'student_list.dart';
 
@@ -151,6 +154,7 @@ class _AhomeState extends State<Ahome> {
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
+                      margin: EdgeInsets.only(bottom: 10),
                       height: 120,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
@@ -184,6 +188,47 @@ class _AhomeState extends State<Ahome> {
                       ),
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AddFaq()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20),
+                      height: 120,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 255, 216, 0),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          topLeft: Radius.circular(0),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              'Add FAQ',
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(25.0),
+                            child: Image.asset(
+                              "assets/intro/intropic.png",
+                              height: 100,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
             ),
@@ -215,9 +260,9 @@ class _AhomeState extends State<Ahome> {
               IconButton(
                 icon: Icon(Icons.question_mark_rounded,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
                 onPressed: () {
-                  // Handle button press here
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FaqS2()));
                 },
-
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(

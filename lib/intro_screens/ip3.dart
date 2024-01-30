@@ -5,6 +5,8 @@ class IntroPage3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -21,35 +23,31 @@ class IntroPage3 extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(height: 10),
-          const Text(
-            "Mobile app functionalities.",
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+          const SizedBox(
+            height: 20,
           ),
-          SizedBox(height: 10),
-          const SizedBox(height: 10),
-          buildBulletPoint("Student registration"),
-          SizedBox(height: 2),
-          buildBulletPoint("Check visa Status"),
-          SizedBox(height: 2),
-          buildBulletPoint("Contact with counsellor"),
-          SizedBox(height: 2),
-          buildBulletPoint("Get updated about latest events"),
-          SizedBox(height: 2),
-          buildBulletPoint("Select the flight date"),
-          const SizedBox(height: 20),
-          const Text(
-            "", // Add your content here
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black54,
-            ),
+          Image.asset(
+            "assets/intro/world.png",
+            height: 400,
+            width: 0.9 * width,
           ),
+          SizedBox(height: 25),
+          const Text("Q Study World Network",
+              style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(
+            height: 15,
+          ),
+          const Text(
+              "Q Study is currently working with 16 countries worldwide",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.amber,
+                  fontWeight: FontWeight.bold
+              )),
         ],
       ),
     );

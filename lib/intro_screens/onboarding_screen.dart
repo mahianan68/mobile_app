@@ -3,7 +3,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '/intro_screens/ip1.dart';
 import '/intro_screens/ip2.dart';
 import '/intro_screens/ip3.dart';
-import '/intro_screens/ip4.dart';
 import '/auth/authmain.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -26,14 +25,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               controller: _controller,
               onPageChanged: (index) {
                 setState(() {
-                  onLastScreen = (index == 3);
+                  onLastScreen = (index == 2);
                 });
               },
               children: const [
                 IntroPage1(),
                 IntroPage2(),
                 IntroPage3(),
-                IntroPage4(),
               ]),
           //dot inndicator
           Container(
@@ -44,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 //skip
                 GestureDetector(
                   onTap: () {
-                    _controller.jumpToPage(3);
+                    _controller.jumpToPage(2);
                   },
                   child: const Text(
                     'Skip',
@@ -58,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 SmoothPageIndicator(
                   controller: _controller,
-                  count: 4,
+                  count: 3,
                   axisDirection: Axis.horizontal,
                   effect: const SlideEffect(
                       spacing: 8.0,

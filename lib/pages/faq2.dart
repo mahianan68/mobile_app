@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/pages/adminhome.dart';
 import 'package:mobile_app/pages/student_home.dart';
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FaqS extends StatefulWidget {
-  const FaqS({super.key});
+class FaqS2 extends StatefulWidget {
+  const FaqS2({super.key});
 
   @override
-  State<FaqS> createState() => _FaqSState();
+  State<FaqS2> createState() => _FaqS2State();
 }
 
-class _FaqSState extends State<FaqS> {
+class _FaqS2State extends State<FaqS2> {
   final Stream<QuerySnapshot> scheduleStream =
-      FirebaseFirestore.instance.collection('faq').snapshots();
+  FirebaseFirestore.instance.collection('faq').snapshots();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -54,7 +55,7 @@ class _FaqSState extends State<FaqS> {
                   ),
                   child: TextButton(
                       style:
-                          TextButton.styleFrom(fixedSize: const Size(120, 40)),
+                      TextButton.styleFrom(fixedSize: const Size(120, 40)),
                       onPressed: () {},
                       child: const Text(
                         "Consultancy",
@@ -83,18 +84,21 @@ class _FaqSState extends State<FaqS> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                                builder: (context) => Ahome()));
                       },
 
                       iconSize: 36.0, // Optional icon size
                     ),
                     IconButton(
                       icon: Icon(
-                        Icons.home,
-                        color: Color.fromARGB(255, 255, 216, 0),
-                      ), // Replace with your desired icon
+                        Icons.question_mark_rounded,
+                        color: Color.fromARGB(255, 255, 216, 0),),
+
                       onPressed: () {
-                        // Handle button press here
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FaqS2()));
                       },
 
                       iconSize: 36.0, // Optional icon size
@@ -106,7 +110,7 @@ class _FaqSState extends State<FaqS> {
                       ), // Replace with your desired icon
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => FaqS()));
+                            MaterialPageRoute(builder: (context) => FaqS2()));
                       },
                       iconSize: 36.0, // Optional icon size
                     ),
@@ -147,7 +151,7 @@ class _FaqSState extends State<FaqS> {
                 scaleWhenAnimating: true,
                 openAndCloseAnimation: true,
                 headerPadding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
                 sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
                 sectionClosingHapticFeedback: SectionHapticFeedback.light,
                 children: [
@@ -158,7 +162,7 @@ class _FaqSState extends State<FaqS> {
                       leftIcon: const Icon(Icons.text_fields_rounded,
                           color: Colors.tealAccent),
                       headerBackgroundColor: Colors.black38,
-                      
+
                       headerBackgroundColorOpened: Colors.black54,
                       header: Text(storedocs[i]['fquestion'],style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
                       content: Text(storedocs[i]['fanswer']),
