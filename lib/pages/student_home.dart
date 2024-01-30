@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/auth/auth_page.dart';
+import 'package:mobile_app/auth/authmain.dart';
 import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/student_registration.dart';
 import '/auth/login_page.dart';
@@ -22,6 +23,10 @@ class _HomePageState extends State<HomePage> {
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MainPage()));
   }
 
   @override
@@ -32,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
-        toolbarHeight: 100,
+        toolbarHeight: 80,
         backgroundColor: Color.fromARGB(255, 0, 25, 37),
         leading: Image.asset(
           "assets/images/qsw.png",
@@ -64,6 +69,7 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         alignment: AlignmentDirectional.center,
         decoration: const BoxDecoration(
+
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -78,62 +84,46 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
-            // Container(
-            //   child : const Text("do you want to sign out "),
-
-            // ),
-            // Text('Signed in as ' + user.email!),
-
-            // Image.asset(
-            //   "assets/intro/intropic.png",
-            //   height: 400,
-            // ),
-            Container(
-              height: 130.0,
-              decoration: const BoxDecoration(
-                  // color: Color.fromARGB(255, 225, 210, 210),
-                  ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left:10,top:10),
-
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    height: 25.0,
-                    width: 100.0,
-                    child: const Text('Hello', style: TextStyle(fontSize: 20)),
-                    //hello button
-                  ),
-                  Container(
+            SizedBox(height:10),
+             Container(
                     height: 90.0,
                     margin: EdgeInsets.only(left:10,right:10,bottom:5),
 
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 252, 252, 252),
-                    ),
+
+               decoration: const BoxDecoration(
+                 borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                 gradient: LinearGradient(
+                   begin: Alignment.topRight,
+                   end: Alignment.bottomLeft,
+                   stops: [0.5, 0.9],
+                   colors: [
+                     Color.fromARGB(255, 0, 25, 37),
+                     Color.fromARGB(255, 0, 49, 72)
+
+                   ],
+                 ),
+               ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(width:10),
                         ClipRRect(
-                            borderRadius: BorderRadius.circular(50.0),
+                            borderRadius: BorderRadius.circular(10.0),
                             child: Image.asset(
                               "assets/intro/intropic.png",
-                              height: 100,
-                              width: 100,
+                              height: 70,
+                              width: 70,
                             )),
+                        SizedBox(width:70),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               'Azizul Alam',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 20, color: Colors.white,),
                             ),
                             Container(
                               height: 35,
@@ -155,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
 
                                       fontSize: 12,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   )),
                             ),
@@ -163,14 +153,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-
-                    //profile
-                  )
-                ],
-              ),
-            ),
-             SizedBox(height:20),
-            Expanded(
+             ),
+             SizedBox(height:10),
+             Expanded(
               child: ListView(
                 // This next line does the trick.
                 children: <Widget>[
@@ -195,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             'Check VISA Status',
@@ -204,12 +189,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/visa.png",
+                              height: 80,
                             ),
                           ),
+
                         ],
                       ),
                     ),
@@ -235,22 +220,21 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             width: 250,
                             child: Text(
-                              'Q study Event Calender',
+                              'Upcoming Events',
                               style: TextStyle(
                                 fontSize: 25,
                               ),
                             ),
                           ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/event.png",
+                              height: 80,
                             ),
                           ),
                         ],
@@ -259,10 +243,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EventCal()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => FlightCal()));
                     },
                     child: Container(
                       padding:EdgeInsets.only(left: 20),
@@ -278,22 +262,21 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             width: 250,
                             child: Text(
-                              'Airport Pickup Request',
+                              'Select Deperture date',
                               style: TextStyle(
                                 fontSize: 25,
                               ),
                             ),
                           ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/plane.png",
+                              height: 80,
                             ),
                           ),
                         ],
@@ -303,17 +286,15 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-
-            // ElevatedButton(
-            //     onPressed: () async {}, child: Text("Update Profile"))
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
         height: 60,
-        padding: EdgeInsets.all(1),
+        color: Color.fromARGB(255, 0, 0, 0),
+        padding: EdgeInsets.only(top:2),
         child: Container(
-          color: Color.fromARGB(255, 35, 173, 4),
+          color: Color.fromARGB(255, 0, 25, 37),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

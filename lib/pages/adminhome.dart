@@ -21,13 +21,14 @@ class _AhomeState extends State<Ahome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 100,
         toolbarHeight: 80,
         backgroundColor: Color.fromARGB(255, 0, 25, 37),
-        title: Image.asset(
-                  "assets/images/qsw.png",
-                  height: 60,
-                  width: 100,
-                ),
+        leading: Image.asset(
+          "assets/images/qsw.png",
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+
       ),
       body: Container(
         alignment: AlignmentDirectional.center,
@@ -237,9 +238,10 @@ class _AhomeState extends State<Ahome> {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 60,
-        padding: EdgeInsets.all(1),
+        color: Color.fromARGB(255, 0, 0, 0),
+        padding: EdgeInsets.only(top:2),
         child: Container(
-          color: Color.fromARGB(255, 35, 173, 4),
+          color: Color.fromARGB(255, 0, 25, 37),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

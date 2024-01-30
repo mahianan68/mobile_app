@@ -76,7 +76,11 @@ flutter:
     - assets/intro/intropic.png
     - assets/intro/world.png
     - assets/images/qsw.png
-    - assets/images/qsc.png
+    - assets/images/event.png
+    - assets/images/plane.png
+    - assets/images/visa.png
+    - assets/images/wapp.png
+    - assets/images/emgs.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

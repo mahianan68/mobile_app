@@ -1,9 +1,18 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/student_home.dart';
 import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile_app/pages/notifications.dart';
+import 'package:mobile_app/pages/student_home.dart';
+import 'package:accordion/accordion.dart';
+import 'package:accordion/controllers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../auth/authmain.dart';
+import 'faq.dart';
 
 class CheckVisaBox extends StatefulWidget {
   const CheckVisaBox({super.key});
@@ -22,8 +31,15 @@ class CheckVisaBox extends StatefulWidget {
 //   await launchUrl(link.asUri());
 // }
 class _CheckVisaBoxState extends State<CheckVisaBox> {
-  Future<void>? _launched;
 
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MainPage()));
+  }
+  Future<void>? _launched;
   @override
   Future<void> _launchInBrowser(Uri url) async {
     if (!await launchUrl(
@@ -50,50 +66,60 @@ class _CheckVisaBoxState extends State<CheckVisaBox> {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 60,
-        padding: EdgeInsets.all(1),
+        color: Color.fromARGB(255, 0, 0, 0),
+        padding: EdgeInsets.only(top:2),
         child: Container(
-          color: Color.fromARGB(255, 35, 173, 4),
+          color: Color.fromARGB(255, 0, 25, 37),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                icon: Icon(
+                  Icons.home_outlined,
+                  color: Color.fromARGB(255, 255, 216, 0),
+                ), // Replace with your desired icon
                 onPressed: () {
-
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomePage()));
-
                 },
 
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(
-                icon: Icon(Icons.home,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                icon: Icon(
+                  Icons.question_mark_rounded,
+                  color: Color.fromARGB(255, 255, 216, 0),
+                ), // Replace with your desired icon
                 onPressed: () {
-                  // Handle button press here
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FaqS()));
                 },
 
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(
-                icon: Icon(Icons.notification_important_outlined,
-                  color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
+                icon: Icon(
+                  Icons.notification_important_outlined,
+                  color: Color.fromARGB(255, 255, 216, 0),
+                ), // Replace with your desired icon
                 onPressed: () {
-                  // Handle button press here
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NotiFications()));
                 },
                 iconSize: 36.0, // Optional icon size
               ),
               IconButton(
-                icon: Icon(Icons.exit_to_app_sharp
-                  ,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
-                onPressed: () {
-                  // Handle button press here
-                },
+                icon: Icon(
+                  Icons.exit_to_app_sharp,
+                  color: Color.fromARGB(255, 255, 216, 0),
+                ), // Replace with your desired icon
+                onPressed: signUserOut,
                 iconSize: 36.0, // Optional icon size
               ),
-
             ],
           ),
         ),
@@ -112,43 +138,43 @@ class _CheckVisaBoxState extends State<CheckVisaBox> {
               ),
             ),
           child:ListView(children: [
-            // GestureDetector(
-            //   onTap: launchWhatsAppUri()
-            //
-            //   ,
-            //   child: Container(
-            //     margin: EdgeInsets.only(left:10,right:10,bottom:5,top:10),
-            //     padding: EdgeInsets.only(left: 20),
-            //     height: 120,
-            //     decoration: const BoxDecoration(
-            //       color: Color.fromARGB(255, 255, 216, 0),
-            //       borderRadius: BorderRadius.only(
-            //         topRight: Radius.circular(20),
-            //         bottomRight: Radius.circular(20),
-            //         bottomLeft: Radius.circular(20),
-            //         topLeft: Radius.circular(0),
-            //       ),
-            //     ),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         Text(
-            //           'Check Emgs Status',
-            //           style: TextStyle(
-            //             fontSize: 25,
-            //           ),
-            //         ),
-            //         ClipRRect(
-            //           borderRadius: BorderRadius.circular(25.0),
-            //           child: Image.asset(
-            //             "assets/intro/intropic.png",
-            //             height: 100,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+            GestureDetector(
+              onTap: () => setState(() {
+                _launched = _launchInBrowser(toLaunch);
+              }),
+              child: Container(
+                margin: EdgeInsets.only(left:10,right:10,bottom:5,top:10),
+                padding: EdgeInsets.only(left: 20),
+                height: 120,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 216, 0),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    topLeft: Radius.circular(0),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Check Emgs Status',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                    ClipRRect(
+                      child: Image.asset(
+                        "assets/images/emgs.png",
+                        height: 80,
+                      ),
+                    ),
+                    SizedBox(width: 5,)
+                  ],
+                ),
+              ),
+            ),
             GestureDetector(
               onTap: () => setState(() {
                 _launched = _launchInBrowser(toLaunch);
@@ -179,12 +205,14 @@ class _CheckVisaBoxState extends State<CheckVisaBox> {
                       ),
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(25.0),
                       child: Image.asset(
-                        "assets/intro/intropic.png",
-                        height: 100,
+
+                        "assets/images/wapp.png",
+                        height: 80,
+                        color: Color.fromARGB(124, 0, 0, 0),
                       ),
                     ),
+                    SizedBox(width: 20,)
                   ],
                 ),
               ),

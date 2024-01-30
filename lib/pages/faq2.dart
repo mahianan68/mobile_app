@@ -40,38 +40,20 @@ class _FaqS2State extends State<FaqS2> {
 
             appBar: AppBar(
               leadingWidth: 100,
-              toolbarHeight: 100,
+              toolbarHeight: 80,
               backgroundColor: Color.fromARGB(255, 0, 25, 37),
               leading: Image.asset(
                 "assets/images/qsw.png",
                 color: Color.fromARGB(255, 255, 255, 255),
               ),
-              actions: [
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 35, 173, 4),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  child: TextButton(
-                      style:
-                      TextButton.styleFrom(fixedSize: const Size(120, 40)),
-                      onPressed: () {},
-                      child: const Text(
-                        "Consultancy",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                        ),
-                      )),
-                ),
-              ],
+
             ),
             bottomNavigationBar: BottomAppBar(
               height: 60,
-              padding: EdgeInsets.all(1),
+              color: Color.fromARGB(255, 0, 0, 0),
+              padding: EdgeInsets.only(top:2),
               child: Container(
-                color: Color.fromARGB(255, 35, 173, 4),
+                color: Color.fromARGB(255, 0, 25, 37),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

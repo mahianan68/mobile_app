@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app/pages/notifications.dart';
 import 'package:mobile_app/pages/student_home.dart';
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../auth/authmain.dart';
 
 class FaqS extends StatefulWidget {
   const FaqS({super.key});
@@ -12,6 +16,13 @@ class FaqS extends StatefulWidget {
 }
 
 class _FaqSState extends State<FaqS> {
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MainPage()));
+  }
   final Stream<QuerySnapshot> scheduleStream =
       FirebaseFirestore.instance.collection('faq').snapshots();
   @override
@@ -35,11 +46,10 @@ class _FaqSState extends State<FaqS> {
             a['id'] = document.id;
           }).toList();
           return Scaffold(
-            backgroundColor: Color.fromARGB(255, 1, 62, 91),
 
             appBar: AppBar(
               leadingWidth: 100,
-              toolbarHeight: 100,
+              toolbarHeight: 80,
               backgroundColor: Color.fromARGB(255, 0, 25, 37),
               leading: Image.asset(
                 "assets/images/qsw.png",
@@ -68,9 +78,10 @@ class _FaqSState extends State<FaqS> {
             ),
             bottomNavigationBar: BottomAppBar(
               height: 60,
-              padding: EdgeInsets.all(1),
+              color: Color.fromARGB(255, 0, 0, 0),
+              padding: EdgeInsets.only(top:2),
               child: Container(
-                color: Color.fromARGB(255, 35, 173, 4),
+                color: Color.fromARGB(255, 0, 25, 37),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -90,11 +101,14 @@ class _FaqSState extends State<FaqS> {
                     ),
                     IconButton(
                       icon: Icon(
-                        Icons.home,
+                        Icons.question_mark_rounded,
                         color: Color.fromARGB(255, 255, 216, 0),
                       ), // Replace with your desired icon
                       onPressed: () {
-                        // Handle button press here
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FaqS()));
                       },
 
                       iconSize: 36.0, // Optional icon size
@@ -106,7 +120,7 @@ class _FaqSState extends State<FaqS> {
                       ), // Replace with your desired icon
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => FaqS()));
+                            MaterialPageRoute(builder: (context) => NotiFications()));
                       },
                       iconSize: 36.0, // Optional icon size
                     ),
@@ -115,16 +129,16 @@ class _FaqSState extends State<FaqS> {
                         Icons.exit_to_app_sharp,
                         color: Color.fromARGB(255, 255, 216, 0),
                       ), // Replace with your desired icon
-                      onPressed: () {
-                        // Handle button press here
-                      },
+                      onPressed: signUserOut,
                       iconSize: 36.0, // Optional icon size
                     ),
                   ],
                 ),
               ),
             ),
-            body: Container(
+            body:
+
+            Container(
               height: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -137,7 +151,28 @@ class _FaqSState extends State<FaqS> {
                   ],
                 ),
               ),
-              child: Accordion(
+              child: Column(
+                children: [
+                Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(5),
+
+                decoration:  BoxDecoration(
+                  color: Color.fromARGB(255, 0, 25, 37),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20.0),
+                    bottomRight: Radius.circular(20.0),
+                    topLeft: Radius.zero,
+                    topRight: Radius.zero,
+                  ),
+
+                ),
+                child: Text("Frequently Asked Questions",style: TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 255, 216, 0),
+                ),),
+              ),
+              Accordion(
                 headerBorderColorOpened: Colors.transparent,
                 headerBackgroundColorOpened: Colors.yellow,
                 contentBackgroundColor: Colors.white,
@@ -155,7 +190,7 @@ class _FaqSState extends State<FaqS> {
                     AccordionSection(
                       isOpen: true,
                       contentVerticalPadding: 20,
-                      leftIcon: const Icon(Icons.text_fields_rounded,
+                      leftIcon: const Icon(Icons.policy_sharp,
                           color: Colors.tealAccent),
                       headerBackgroundColor: Colors.black38,
                       
@@ -166,8 +201,9 @@ class _FaqSState extends State<FaqS> {
                   ],
                 ],
               ),
-            ),
-            // bottomNavigationBar: ,
+           ]
+              ),
+            )
           );
         });
   }

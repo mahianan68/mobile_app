@@ -61,7 +61,7 @@ class _RegisterStudentState extends State<RegisterStudent> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
-        toolbarHeight: 100,
+        toolbarHeight: 80,
         backgroundColor: Color.fromARGB(255, 0, 25, 37),
         leading: Image.asset(
           "assets/images/qsw.png",
