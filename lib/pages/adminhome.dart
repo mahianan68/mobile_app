@@ -9,6 +9,7 @@ import 'add_event.dart';
 import 'chat/chatbox.dart';
 import 'notifications.dart';
 import 'student_list.dart';
+import 'utils.dart';
 
 class Ahome extends StatefulWidget {
   const Ahome({super.key});
@@ -110,6 +111,10 @@ class _AhomeState extends State<Ahome> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      fetchEvents().then((fetchedEvents) {
+                        // Use the fetchedEvents map here
+                        print(fetchedEvents);
+                      });
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => AddEventPage()));
                     },

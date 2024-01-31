@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/student_home.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../auth/authmain.dart';
 import 'Eventlist.dart';
 import 'faq.dart';
 import 'notifications.dart';
 import 'utils.dart';
 
+
+class Event {
+  final String title;
+
+  const Event(this.title);
+
+  @override
+  String toString() => title;
+}
 class AddEventPage extends StatefulWidget {
   @override
   _AddEventPageState createState() => _AddEventPageState();
@@ -20,6 +28,22 @@ class _AddEventPageState extends State<AddEventPage> {
     FirebaseAuth.instance.signOut();
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MainPage()));
+  }
+  Map<DateTime, List<Event>> events = {};
+  Future<Map<DateTime, List<Event>>> fetchEvents() async {
+    Map<DateTime, List<Event>> events = {};
+
+    FirebaseFirestore.instance.collection('eventschedule').get().then((querySnapshot) {
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        Timestamp timestamp = doc['selectedDate'];
+        String title = doc['name'];
+
+        DateTime date = timestamp.toDate().toUtc();
+        events.putIfAbsent(date, () => []).add(Event(title)); // Group events by date
+      }
+    });
+
+    return events;
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -33,7 +57,10 @@ class _AddEventPageState extends State<AddEventPage> {
       .toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  Map<DateTime, List<Event>> events = {};
+
+
+
+
   TextEditingController _eventController = TextEditingController();
   late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime? _rangeStart;
@@ -44,8 +71,31 @@ class _AddEventPageState extends State<AddEventPage> {
     super.initState();
 
     _selectedDay = _focusedDay;
+    _fetchEvents(); // Call the fetchEvents function
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
+
+  Future<void> _fetchEvents() async {
+    events = await fetchEvents(); // Assign the fetched events to the events map
+    setState(() {}); // Trigger a rebuild to display the events
+  }
+
+  List<Event> _getEventsForDay(DateTime day) {
+    return events[day] ?? []; // Retrieve events from the fetched events map
+  }
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+        _rangeStart = null; // Important to clean those
+        _rangeEnd = null;
+        _rangeSelectionMode = RangeSelectionMode.toggledOff;
+        _selectedEvents.value = _getEventsForDay(selectedDay);
+      });
+    }
+  }
+
 
   @override
   void dispose() {
@@ -64,6 +114,13 @@ class _AddEventPageState extends State<AddEventPage> {
   CollectionReference eventschedule =
   FirebaseFirestore.instance.collection('eventschedule');
 
+
+
+// Example usage:
+
+
+
+
   Future<void> AddEvent() {
     return eventschedule
         .add({
@@ -76,23 +133,11 @@ class _AddEventPageState extends State<AddEventPage> {
         .catchError((error) => print('Failed to Add user: $error'));
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return events[day] ?? [];
-  }
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    if (!isSameDay(_selectedDay, selectedDay)) {
-      setState(() {
-        _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
-        _rangeStart = null; // Important to clean those
-        _rangeEnd = null;
-        _rangeSelectionMode = RangeSelectionMode.toggledOff;
-        _selectedEvents.value = _getEventsForDay(selectedDay);
-      });
-    }
-  }
+
+
+
+
 
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
     setState(() {
@@ -107,6 +152,7 @@ class _AddEventPageState extends State<AddEventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         leadingWidth: 100,
         toolbarHeight: 80,
@@ -120,6 +166,7 @@ class _AddEventPageState extends State<AddEventPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 0, 25, 37),
         onPressed: () {
+
           showDialog(
               context: context,
               builder: (context) {
@@ -295,7 +342,7 @@ class _AddEventPageState extends State<AddEventPage> {
               focusedDay: _focusedDay,
 
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-              // calendarFormat: _calendarFormat,
+
               eventLoader: _getEventsForDay,
               rangeSelectionMode: RangeSelectionMode.disabled,
               startingDayOfWeek: StartingDayOfWeek.saturday,
@@ -316,9 +363,9 @@ class _AddEventPageState extends State<AddEventPage> {
                 const Icon(Icons.chevron_right, color: Colors.yellow),
               ),
               calendarStyle: CalendarStyle(
-                // rowDecoration: const BoxDecoration(
-                //   color: Colors.green
-                // ),
+
+                markerDecoration: const BoxDecoration(color: const Color(
+                    0xFFFFFFFF), shape: BoxShape.circle),
                 rangeHighlightColor: const Color(0xFFFFC600),
                 todayTextStyle: const TextStyle(
                     color: const Color(0xFFFFD800), fontSize: 16.0),
@@ -363,8 +410,9 @@ class _AddEventPageState extends State<AddEventPage> {
                 ),
                 outsideDaysVisible: false,
               ),
-              onDaySelected: _onDaySelected,
               onRangeSelected: _onRangeSelected,
+              onDaySelected: _onDaySelected,
+
               onFormatChanged: (format) {
                 if (_calendarFormat != format) {
                   setState(() {

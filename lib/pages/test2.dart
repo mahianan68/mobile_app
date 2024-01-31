@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'utils.dart';
+class Event {
+  final String title;
+
+  const Event(this.title);
+
+  @override
+  String toString() => title;
+}
 
 class TableEventsExample extends StatefulWidget {
   @override
@@ -16,38 +24,51 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   Map<DateTime, List<Event>> events = {};
+  Future<Map<DateTime, List<Event>>> fetchEvents() async {
+    Map<DateTime, List<Event>> events = {};
+
+   FirebaseFirestore.instance.collection('eventschedule').get().then((querySnapshot) {
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        Timestamp timestamp = doc['selectedDate'];
+        String title = doc['name'];
+
+        DateTime date = timestamp.toDate().toUtc();
+        events.putIfAbsent(date, () => []).add(Event(title)); // Group events by date
+      }
+    });
+
+    return events;
+  }
   TextEditingController _eventController = TextEditingController();
   late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
   @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   _selectedDay = _focusedDay;
+  //   _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  // }
   void initState() {
     super.initState();
 
     _selectedDay = _focusedDay;
+    _fetchEvents(); // Call the fetchEvents function
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
-  @override
-  void dispose() {
-    _selectedEvents.dispose();
-    super.dispose();
+  Future<void> _fetchEvents() async {
+    events = await fetchEvents(); // Assign the fetched events to the events map
+    setState(() {}); // Trigger a rebuild to display the events
   }
 
   List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return events[day] ?? [];
+    return events[day] ?? []; // Retrieve events from the fetched events map
   }
 
-  // List<Event> _getEventsForRange(DateTime start, DateTime end) {
-  //   // Implementation example
-  //   final days = daysInRange(start, end);
-  //
-  //   return [
-  //     for (final d in days) ..._getEventsForDay(d),
-  //   ];
-  // }
+
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -64,24 +85,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     }
   }
 
-  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
-    setState(() {
-      _selectedDay = null;
-      _focusedDay = focusedDay;
-      _rangeStart = start;
-      _rangeEnd = end;
-      _rangeSelectionMode = RangeSelectionMode.toggledOn;
-    });
 
-    // `start` or `end` could be null
-    // if (start != null && end != null) {
-    //   _selectedEvents.value = _getEventsForRange(start, end);
-    // } else if (start != null) {
-    //   _selectedEvents.value = _getEventsForDay(start);
-    // } else if (end != null) {
-    //   _selectedEvents.value = _getEventsForDay(end);
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +113,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                           events.addAll({
                             _selectedDay!: [Event(_eventController.text)]
                           });
+                           print(events);
+
                           Navigator.of(context).pop();
                           _selectedEvents.value= _getEventsForDay(_selectedDay!);
                         },
@@ -135,7 +141,6 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               outsideDaysVisible: false,
             ),
             onDaySelected: _onDaySelected,
-            onRangeSelected: _onRangeSelected,
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
                 setState(() {
@@ -165,10 +170,10 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                         color: Colors.deepOrange,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: ListTile(
-                        onTap: () => print("works"),
-                        title: Text('${value[index]}'),
-                      ),
+                      // child: ListTile(
+                      //   onTap: () => print("works"),
+                      //   title: Text('${value[index]}'),
+                      // ),
                     );
                   },
                 );
