@@ -5,6 +5,7 @@ import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/faq2.dart';
 
 import '../auth/authmain.dart';
+import 'add_event.dart';
 import 'chat/chatbox.dart';
 import 'notifications.dart';
 import 'student_list.dart';
@@ -110,7 +111,7 @@ class _AhomeState extends State<Ahome> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => EventCal()));
+                          MaterialPageRoute(builder: (context) => AddEventPage()));
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
@@ -131,7 +132,7 @@ class _AhomeState extends State<Ahome> {
                           Container(
                             width: 250,
                             child: Text(
-                              'Apintment Calender',
+                              'Event Calender',
                               style: TextStyle(
                                 fontSize: 25,
                               ),
@@ -250,10 +251,10 @@ class _AhomeState extends State<Ahome> {
                 icon: Icon(Icons.home_outlined,color: Color.fromARGB(255, 255, 216, 0),), // Replace with your desired icon
                 onPressed: () {
 
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => HomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Ahome()));
 
                 },
 

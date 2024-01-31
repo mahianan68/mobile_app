@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/pages/student_home.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../auth/authmain.dart';
 import 'faq.dart';
 import 'notifications.dart';
 import 'utils.dart';
 
-class EventCal extends StatefulWidget {
+class FlightCal extends StatefulWidget {
   @override
-  _EventCalState createState() => _EventCalState();
+  _FlightCalState createState() => _FlightCalState();
 }
 
-class _EventCalState extends State<EventCal> {
+class _FlightCalState extends State<FlightCal> {
   void signUserOut() {
     FirebaseAuth.instance.signOut();
     Navigator.push(
@@ -55,15 +54,15 @@ class _EventCalState extends State<EventCal> {
   }
 
   CollectionReference schedule =
-      FirebaseFirestore.instance.collection('schedule');
+  FirebaseFirestore.instance.collection('schedule');
 
   Future<void> addUser() {
     return schedule
         .add({
-          'name': name,
-          'settingDate': DateTime.now(),
-          'selectedDate': _selectedDay
-        })
+      'name': name,
+      'settingDate': DateTime.now(),
+      'selectedDate': _selectedDay
+    })
         .then((value) => print('schedule Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -152,7 +151,7 @@ class _EventCalState extends State<EventCal> {
                                   // Navigator.push(
                                   //     context,
                                   //     MaterialPageRoute(
-                                  //         builder: (context) => EventCal()));
+                                  //         builder: (context) => FlightCal()));
                                 },
                                 child: Text("add"))
                           ],
@@ -268,6 +267,10 @@ class _EventCalState extends State<EventCal> {
               rangeSelectionMode: RangeSelectionMode.disabled,
               startingDayOfWeek: StartingDayOfWeek.saturday,
               daysOfWeekStyle: DaysOfWeekStyle(
+
+                decoration: BoxDecoration(
+
+                ),
                 weekdayStyle: const TextStyle( color: Colors.yellow,fontWeight: FontWeight.w600),
                 weekendStyle: const TextStyle( color: Colors.white,fontWeight: FontWeight.w600),
               ),
@@ -275,13 +278,12 @@ class _EventCalState extends State<EventCal> {
                 titleCentered: true,
                 formatButtonVisible: false,
                 titleTextStyle:
-                    const TextStyle(fontSize: 17.0, color: Colors.yellow),
-                formatButtonTextStyle:
-                    const TextStyle(fontSize: 14.0, color: Colors.yellow),
+                const TextStyle(fontSize: 17.0, color: Colors.yellow),
+
                 leftChevronIcon:
-                    const Icon(Icons.chevron_left, color: Colors.yellow),
+                const Icon(Icons.chevron_left, color: Colors.yellow),
                 rightChevronIcon:
-                    const Icon(Icons.chevron_right, color: Colors.yellow),
+                const Icon(Icons.chevron_right, color: Colors.yellow),
               ),
               calendarStyle: CalendarStyle(
                 // rowDecoration: const BoxDecoration(
@@ -305,21 +307,21 @@ class _EventCalState extends State<EventCal> {
                 rangeEndDecoration: const BoxDecoration(
                     color: const Color(0xFF6699FF), shape: BoxShape.circle),
                 withinRangeDecoration:
-                    const BoxDecoration(shape: BoxShape.circle),
+                const BoxDecoration(shape: BoxShape.circle),
                 outsideTextStyle:
-                    const TextStyle(color: const Color(0xFFAEAEAE)),
+                const TextStyle(color: const Color(0xFFAEAEAE)),
                 outsideDecoration: const BoxDecoration(shape: BoxShape.circle),
                 disabledTextStyle:
-                    const TextStyle(color: const Color(0xFFFF0000)),
+                const TextStyle(color: const Color(0xFFFF0000)),
                 disabledDecoration: const BoxDecoration(shape: BoxShape.circle),
                 holidayTextStyle:
-                    const TextStyle(color: const Color(0xFFF5F6F8)),
+                const TextStyle(color: const Color(0xFFF5F6F8)),
                 holidayDecoration: const BoxDecoration(
                     border: const Border.fromBorderSide(const BorderSide(
                         color: const Color(0xFF1A1A1A), width: 1.4)),
                     shape: BoxShape.rectangle),
                 weekendTextStyle:
-                    const TextStyle(color: const Color(0xFFFFFFFF)),
+                const TextStyle(color: const Color(0xFFFFFFFF)),
                 weekendDecoration: const BoxDecoration(shape: BoxShape.circle),
                 weekNumberTextStyle: const TextStyle(
                     fontSize: 12, color: const Color(0xFFFFD900)),

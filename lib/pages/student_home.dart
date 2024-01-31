@@ -11,6 +11,8 @@ import 'faq.dart';
 import 'notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'selectdday.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -243,10 +245,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => FlightCal()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FlightCal()));
                     },
                     child: Container(
                       padding:EdgeInsets.only(left: 20),

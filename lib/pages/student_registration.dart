@@ -72,163 +72,179 @@ class _RegisterStudentState extends State<RegisterStudent> {
       ),
       body:  Form(
       key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.center,
-             padding: EdgeInsets.all(10),
+        child: Container(
+          decoration: const BoxDecoration(
 
-             decoration:  BoxDecoration(
-               color: Color.fromARGB(255, 0, 25, 37),
-               borderRadius: BorderRadius.only(
-                 bottomLeft: Radius.circular(40.0),
-                 bottomRight: Radius.circular(40.0),
-                 topLeft: Radius.zero,
-                 topRight: Radius.zero,
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.5, 0.9],
+              colors: [
+                Color.fromARGB(255, 0, 25, 37),
+                Color.fromARGB(255, 0, 49, 72)
+
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+               padding: EdgeInsets.all(10),
+
+               decoration:  BoxDecoration(
+                 color: Color.fromARGB(255, 0, 25, 37),
+                 borderRadius: BorderRadius.only(
+                   bottomLeft: Radius.circular(40.0),
+                   bottomRight: Radius.circular(40.0),
+                   topLeft: Radius.zero,
+                   topRight: Radius.zero,
+                 ),
+
                ),
+               child: Text("Register Account",style: TextStyle(
+                 fontSize: 25,
+                 color: Color.fromARGB(255, 255, 216, 0),
+               ),),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 20,right: 20),
 
-             ),
-             child: Text("Register Account",style: TextStyle(
-               fontSize: 25,
-               color: Color.fromARGB(255, 255, 216, 0),
-             ),),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20,right: 20),
-              child: Column(
+                child: Column(
 
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  TextFormField(
-
-                    controller: firstnameController,
-                    decoration: InputDecoration(labelText: 'First Name'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your first name';
-                      }
-                      return null;
-                    },
-                  ),
-
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-               controller: lastnameController,
-                decoration: InputDecoration(labelText: 'Last Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your last name';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: dobController,
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: 'Birthdate',
-                  suffixIcon: Icon(Icons.calendar_today),
-                ),
-                onTap: () => pickDate(context),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                 controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please Enter Email';
-                  } else if (!value.contains('@')) {
-                    return 'Please Enter Valid Email';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              IntlPhoneField(
-                controller: phoneController,
-                decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                ),
-                languageCode: "en",
-                onChanged: (phone) {
-                  // phoneController=phone.completeNumber;
-                  // print(phone.completeNumber);
-                },
-                onCountryChanged: (country) {
-                  print('Country changed to: ' + country.name);
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              TextFormField(
-                // name , dob , nationality ,email ,phone number..
-                controller: nationalityController,
-                decoration: InputDecoration(labelText: 'Nationality'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your Nationality';
-                  }
-                  return null;
-                },
-              ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                        width: 400,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 1, 62, 91),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                  children: [
+                    SizedBox(
+                      height: 30,
                     ),
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                            fixedSize: const Size(120, 40)),
-                         onPressed: (){
-                           // Validate returns true if the form is valid, otherwise false.
-                           if (_formKey.currentState!.validate()) {
-                             setState(() {
-                               firstname = firstnameController.text;
-                               lastname = lastnameController.text;
-                               dob = dobController.text;
-                               nationality = nationalityController.text;
-                               email = emailController.text;
-                               phone = phoneController.text;
-                               addUser();
-                             });
-                           }
-                           Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                   builder: (context) => HomePage()));
-                         },
-                        child: const Text(
-                          "Register Now",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                          ),
-                        )),
+                    TextFormField(
+
+                      controller: firstnameController,
+                      decoration: InputDecoration(labelText: 'First Name'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your first name';
+                        }
+                        return null;
+                      },
+                    ),
+
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                 controller: lastnameController,
+                  decoration: InputDecoration(labelText: 'Last Name'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: dobController,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    labelText: 'Birthdate',
+                    suffixIcon: Icon(Icons.calendar_today),
                   ),
-                ],
+                  onTap: () => pickDate(context),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                   controller: emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please Enter Email';
+                    } else if (!value.contains('@')) {
+                      return 'Please Enter Valid Email';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                IntlPhoneField(
+                  controller: phoneController,
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                  ),
+                  languageCode: "en",
+                  onChanged: (phone) {
+                    // phoneController=phone.completeNumber;
+                    // print(phone.completeNumber);
+                  },
+                  onCountryChanged: (country) {
+                    print('Country changed to: ' + country.name);
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+
+                TextFormField(
+                  // name , dob , nationality ,email ,phone number..
+                  controller: nationalityController,
+                  decoration: InputDecoration(labelText: 'Nationality'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your Nationality';
+                    }
+                    return null;
+                  },
+                ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                          width: 400,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 1, 62, 91),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: TextButton(
+                          style: TextButton.styleFrom(
+                              fixedSize: const Size(120, 40)),
+                           onPressed: (){
+                             // Validate returns true if the form is valid, otherwise false.
+                             if (_formKey.currentState!.validate()) {
+                               setState(() {
+                                 firstname = firstnameController.text;
+                                 lastname = lastnameController.text;
+                                 dob = dobController.text;
+                                 nationality = nationalityController.text;
+                                 email = emailController.text;
+                                 phone = phoneController.text;
+                                 addUser();
+                               });
+                             }
+                             Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                     builder: (context) => HomePage()));
+                           },
+                          child: const Text(
+                            "Register Now",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
               ),
-            ),
-    ],
+              ],
+          ),
         ),
 
       ),

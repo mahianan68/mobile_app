@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 
-class ListStudentPage extends StatefulWidget {
-  ListStudentPage({Key? key}) : super(key: key);
+class EventList extends StatefulWidget {
+  EventList({Key? key}) : super(key: key);
 
   @override
-  _ListStudentPageState createState() => _ListStudentPageState();
+  _EventListState createState() => _EventListState();
 }
 
-class _ListStudentPageState extends State<ListStudentPage> {
+class _EventListState extends State<EventList> {
   final Stream<QuerySnapshot> scheduleStream =
-      FirebaseFirestore.instance.collection('schedule').snapshots();
+      FirebaseFirestore.instance.collection('eventschedule').snapshots();
 
 
   @override
@@ -39,27 +39,30 @@ class _ListStudentPageState extends State<ListStudentPage> {
           }).toList();
 
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
                   for (var i = 0; i < storedocs.length; i++) ...[
                     Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 216, 0)),
+                          color: Color.fromARGB(65, 0, 106, 161)),
                       child: Column(
                         children: [
                           Text(storedocs[i]['name'],
-                              style: TextStyle(fontSize: 18.0)),
+                              style: TextStyle(fontSize: 18.0,color: Colors.yellow)),
+                          Text(storedocs[i]['vanue'],
+                              style: TextStyle(fontSize: 18.0,color: Colors.white)),
                       Text(
-                        DateFormat('dd/MM/yyyy').format(storedocs[i]['selectedDate'].toDate()), // Format selectedDate
-                        style: TextStyle(fontSize: 18.0),
+                        DateFormat('EEE, d.M.y').format(storedocs[i]['selectedDate'].toDate()), // Format selectedDate
+                        style: TextStyle(fontSize: 18.0,color: Colors.white),
                       ),
-                      Text(
-                        DateFormat('dd/MM/yyyy').format(storedocs[i]['settingDate'].toDate()), // Format settingDate
-                        style: TextStyle(fontSize: 18.0),),
+                      // Text(
+                      //   DateFormat('dd/MM/yyyy').format(storedocs[i]['settingDate'].toDate()), // Format settingDate
+                      //   style: TextStyle(fontSize: 18.0),),
                         ],
                       ),
                     ),
