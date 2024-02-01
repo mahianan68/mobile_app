@@ -16,11 +16,6 @@ class EventCal extends StatefulWidget {
 }
 
 class _EventCalState extends State<EventCal> {
-  void signUserOut() {
-    FirebaseAuth.instance.signOut();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
-  }
   Map<DateTime, List<Event>> events = {};
   Future<Map<DateTime, List<Event>>> fetchEvents() async {
     Map<DateTime, List<Event>> events = {};
@@ -112,7 +107,13 @@ class _EventCalState extends State<EventCal> {
       });
     }
   }
-
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MainPage()));
+  }
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
     setState(() {
       _selectedDay = null;
@@ -136,63 +137,7 @@ class _EventCalState extends State<EventCal> {
         ),
         // centerTitle: false, // Ensure title is left-aligned if present
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Color.fromARGB(255, 0, 25, 37),
-      //   onPressed: () {
-      //     showDialog(
-      //         context: context,
-      //         builder: (context) {
-      //           return AlertDialog(
-      //             backgroundColor: Color.fromARGB(255, 253, 224, 224),
-      //             scrollable: true,
-      //             title: Text("Set appointment"),
-      //             content: Form(
-      //               key: _formKey,
-      //               child: Padding(
-      //                   padding: EdgeInsets.all(8),
-      //                   child: Column(
-      //                     children: [
-      //                       TextFormField(
-      //                         decoration: const InputDecoration(
-      //                           border: UnderlineInputBorder(),
-      //                           labelText: 'Name: ',
-      //                           labelStyle: TextStyle(fontSize: 20.0),
-      //                         ),
-      //                         controller: nameController,
-      //                         validator: (value) {
-      //                           if (value == null || value.isEmpty) {
-      //                             return 'Please Enter Name';
-      //                           }
-      //                           return null;
-      //                         },
-      //                       ),
-      //                       ElevatedButton(
-      //                           onPressed: () {
-      //                             // Validate returns true if the form is valid, otherwise false.
-      //                             if (_formKey.currentState!.validate()) {
-      //                               setState(() {
-      //                                 name = nameController.text;
-      //                                 addUser();
-      //                                 clearText();
-      //                               });
-      //                             }
-      //                             // Navigator.push(
-      //                             //     context,
-      //                             //     MaterialPageRoute(
-      //                             //         builder: (context) => EventCal()));
-      //                           },
-      //                           child: Text("add"))
-      //                     ],
-      //                   )),
-      //             ),
-      //           );
-      //         });
-      //   },
-      //   child: Icon(
-      //     Icons.add,
-      //     color: Color.fromARGB(255, 255, 216, 0),
-      //   ),
-      // ),
+
       bottomNavigationBar: BottomAppBar(
         height: 60,
         color: Color.fromARGB(255, 0, 0, 0),

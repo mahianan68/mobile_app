@@ -6,6 +6,8 @@ import 'package:mobile_app/auth/authmain.dart';
 import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/student_registration.dart';
 import '/auth/login_page.dart';
+import 'chat/chatbox.dart';
+import 'chat/screens/welcome_screen.dart';
 import 'checkvisabox.dart';
 import 'faq.dart';
 import 'notifications.dart';
@@ -57,7 +59,12 @@ class _HomePageState extends State<HomePage> {
             child: TextButton(
                 style: TextButton.styleFrom(
                     fixedSize: const Size(120, 40)),
-                onPressed: signUserOut,
+                onPressed:  () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WelcomeScreen()));
+                },
                 child: const Text(
                   "Consultancy",
                   style: TextStyle(
@@ -111,17 +118,17 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(width:10),
-                        ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 70,
-                              width: 70,
-                            )),
-                        SizedBox(width:70),
-                        Column(
+                        // ClipRRect(
+                        //     borderRadius: BorderRadius.circular(10.0),
+                        //     child: Image.asset(
+                        //       "assets/intro/intropic.png",
+                        //       height: 70,
+                        //       width: 70,
+                        //     )),
+
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Azizul Alam',
