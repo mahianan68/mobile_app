@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../auth/authmain.dart';
 import 'Eventlist.dart';
+import 'adminhome.dart';
 import 'faq.dart';
 import 'notifications.dart';
 import 'utils.dart';
@@ -259,7 +260,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 ), // Replace with your desired icon
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => Ahome()));
                 },
 
                 iconSize: 36.0, // Optional icon size

@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../auth/authmain.dart';
+import 'Eventlist.dart';
 import 'faq.dart';
 import 'notifications.dart';
 import 'utils.dart';
@@ -20,7 +21,22 @@ class _EventCalState extends State<EventCal> {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MainPage()));
   }
+  Map<DateTime, List<Event>> events = {};
+  Future<Map<DateTime, List<Event>>> fetchEvents() async {
+    Map<DateTime, List<Event>> events = {};
 
+    FirebaseFirestore.instance.collection('eventschedule').get().then((querySnapshot) {
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        Timestamp timestamp = doc['selectedDate'];
+        String title = doc['name'];
+
+        DateTime date = timestamp.toDate().toUtc();
+        events.putIfAbsent(date, () => []).add(Event(title)); // Group events by date
+      }
+    });
+
+    return events;
+  }
   final _formKey = GlobalKey<FormState>();
   var name = "";
   final nameController = TextEditingController();
@@ -29,7 +45,11 @@ class _EventCalState extends State<EventCal> {
       .toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  Map<DateTime, List<Event>> events = {};
+
+
+
+
+
   TextEditingController _eventController = TextEditingController();
   late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime? _rangeStart;
@@ -40,7 +60,17 @@ class _EventCalState extends State<EventCal> {
     super.initState();
 
     _selectedDay = _focusedDay;
+    _fetchEvents(); // Call the fetchEvents function
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  }
+
+  Future<void> _fetchEvents() async {
+    events = await fetchEvents(); // Assign the fetched events to the events map
+    setState(() {}); // Trigger a rebuild to display the events
+  }
+
+  List<Event> _getEventsForDay(DateTime day) {
+    return events[day] ?? []; // Retrieve events from the fetched events map
   }
 
   @override
@@ -68,10 +98,7 @@ class _EventCalState extends State<EventCal> {
         .catchError((error) => print('Failed to Add user: $error'));
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return events[day] ?? [];
-  }
+
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -109,63 +136,63 @@ class _EventCalState extends State<EventCal> {
         ),
         // centerTitle: false, // Ensure title is left-aligned if present
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 0, 25, 37),
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: Color.fromARGB(255, 253, 224, 224),
-                  scrollable: true,
-                  title: Text("Set appointment"),
-                  content: Form(
-                    key: _formKey,
-                    child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: 'Name: ',
-                                labelStyle: TextStyle(fontSize: 20.0),
-                              ),
-                              controller: nameController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Name';
-                                }
-                                return null;
-                              },
-                            ),
-                            ElevatedButton(
-                                onPressed: () {
-                                  // Validate returns true if the form is valid, otherwise false.
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      name = nameController.text;
-                                      addUser();
-                                      clearText();
-                                    });
-                                  }
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => EventCal()));
-                                },
-                                child: Text("add"))
-                          ],
-                        )),
-                  ),
-                );
-              });
-        },
-        child: Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 255, 216, 0),
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Color.fromARGB(255, 0, 25, 37),
+      //   onPressed: () {
+      //     showDialog(
+      //         context: context,
+      //         builder: (context) {
+      //           return AlertDialog(
+      //             backgroundColor: Color.fromARGB(255, 253, 224, 224),
+      //             scrollable: true,
+      //             title: Text("Set appointment"),
+      //             content: Form(
+      //               key: _formKey,
+      //               child: Padding(
+      //                   padding: EdgeInsets.all(8),
+      //                   child: Column(
+      //                     children: [
+      //                       TextFormField(
+      //                         decoration: const InputDecoration(
+      //                           border: UnderlineInputBorder(),
+      //                           labelText: 'Name: ',
+      //                           labelStyle: TextStyle(fontSize: 20.0),
+      //                         ),
+      //                         controller: nameController,
+      //                         validator: (value) {
+      //                           if (value == null || value.isEmpty) {
+      //                             return 'Please Enter Name';
+      //                           }
+      //                           return null;
+      //                         },
+      //                       ),
+      //                       ElevatedButton(
+      //                           onPressed: () {
+      //                             // Validate returns true if the form is valid, otherwise false.
+      //                             if (_formKey.currentState!.validate()) {
+      //                               setState(() {
+      //                                 name = nameController.text;
+      //                                 addUser();
+      //                                 clearText();
+      //                               });
+      //                             }
+      //                             // Navigator.push(
+      //                             //     context,
+      //                             //     MaterialPageRoute(
+      //                             //         builder: (context) => EventCal()));
+      //                           },
+      //                           child: Text("add"))
+      //                     ],
+      //                   )),
+      //             ),
+      //           );
+      //         });
+      //   },
+      //   child: Icon(
+      //     Icons.add,
+      //     color: Color.fromARGB(255, 255, 216, 0),
+      //   ),
+      // ),
       bottomNavigationBar: BottomAppBar(
         height: 60,
         color: Color.fromARGB(255, 0, 0, 0),
@@ -223,18 +250,20 @@ class _EventCalState extends State<EventCal> {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [0.5, 0.9],
-            colors: [
-              Color.fromARGB(255, 1, 62, 91),
-              Color.fromARGB(255, 0, 25, 37)
-            ],
-          ),
-        ),
-        child: Column(
+      decoration: const BoxDecoration(
+      gradient: LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      stops: [0.5, 0.9],
+      colors: [
+      Color.fromARGB(255, 1, 62, 91),
+      Color.fromARGB(255, 0, 25, 37)
+      ],
+      ),
+      ),
+      child: SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
           children: [
             Container(
               alignment: Alignment.center,
@@ -345,35 +374,31 @@ class _EventCalState extends State<EventCal> {
               },
             ),
             const SizedBox(height: 8.0),
-            Expanded(
-              child: ValueListenableBuilder<List<Event>>(
-                valueListenable: _selectedEvents,
-                builder: (context, value, _) {
-                  return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 12.0,
-                          vertical: 4.0,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          color: Colors.deepOrange,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: ListTile(
-                          onTap: () => print("works"),
-                          title: Text('${value[index]}'),
-                        ),
-                      );
-                    },
-                  );
-                },
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 25, 37),
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: Radius.circular(20.0),
+                //   bottomRight: Radius.circular(20.0),
+                //   topLeft: Radius.zero,
+                //   topRight: Radius.zero,
+                // ),
+              ),
+              child: Text(
+                "Events List",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 255, 216, 0),
+                ),
               ),
             ),
+            EventList(),
+
           ],
         ),
+      ),
       ),
     );
   }
