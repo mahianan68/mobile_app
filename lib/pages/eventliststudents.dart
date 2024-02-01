@@ -31,9 +31,8 @@ class _EventlistStudentsState extends State<EventlistStudents> {
   @override
 
   Widget build(BuildContext context) {
-    final Uri toLaunch =Uri(scheme: 'https', host: 'app.samscrm.co.uk', path: 'headers/');
+    final Uri toLaunch =Uri(scheme: 'https', host: 'app.samscrm.co.uk', path: 's/b7RpeVZ38q3dfr0RvxJoaWEQ9');
 
-    https://app.samscrm.co.uk/s/b7RpeVZ38q3dfr0RvxJoaWEQ9
     return StreamBuilder<QuerySnapshot>(
         stream: scheduleStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
