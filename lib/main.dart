@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mobile_app/pages/student_home.dart';
-import 'package:mobile_app/pages/test.dart';
 import 'firebase_options.dart';
-
 import 'intro_screens/onboarding_screen.dart';
-import 'pages/adminhome.dart';
-import 'pages/Eventlist.dart';
-import 'pages/home_page.dart';
-import 'pages/test.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

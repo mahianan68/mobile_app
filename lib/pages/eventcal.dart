@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../auth/authmain.dart';
 import 'Eventlist.dart';
+import 'eventliststudents.dart';
 import 'faq.dart';
 import 'notifications.dart';
 import 'utils.dart';
@@ -339,7 +340,7 @@ class _EventCalState extends State<EventCal> {
                 ),
               ),
             ),
-            EventList(),
+            EventlistStudents(),
 
           ],
         ),

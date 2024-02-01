@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/auth/auth_page.dart';
 import 'package:mobile_app/auth/authmain.dart';
+import 'package:mobile_app/pages/chat/screens/chat_screen.dart';
 import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/student_registration.dart';
 import '/auth/login_page.dart';
 import 'chat/chatbox.dart';
-import 'chat/screens/welcome_screen.dart';
 import 'checkvisabox.dart';
 import 'faq.dart';
 import 'notifications.dart';
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WelcomeScreen()));
+                          builder: (context) => ChatScreen()));
                 },
                 child: const Text(
                   "Consultancy",

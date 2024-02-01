@@ -9,7 +9,6 @@ import 'notifications.dart';
 import 'utils.dart';
 import 'package:intl/intl.dart';
 
-
 class FlightCal extends StatefulWidget {
   @override
   _FlightCalState createState() => _FlightCalState();
@@ -21,7 +20,7 @@ class _FlightCalState extends State<FlightCal> {
   var name = "";
   var landingtime = "";
   var airport = "";
-  var dop ="";
+  var dop = "";
   final nameController = TextEditingController();
   final landingtimeController = TextEditingController();
   final airportController = TextEditingController();
@@ -40,30 +39,42 @@ class _FlightCalState extends State<FlightCal> {
     );
 
     if (pickedDate != null) {
-       dopController.text = DateFormat('yyyy-MM-dd').format(pickedDate); // Format as needed
+      dopController.text =
+          DateFormat('yyyy-MM-dd').format(pickedDate); // Format as needed
     }
   }
+
   void signUserOut() {
     FirebaseAuth.instance.signOut();
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MainPage()));
   }
+
+  clearText() {
+    nameController.clear();
+    landingtimeController.clear();
+    airportController.clear();
+    dopController.clear();
+  }
+
   CollectionReference pickups =
-  FirebaseFirestore.instance.collection('pickupdates');
+      FirebaseFirestore.instance.collection('pickupdates');
 
   Future<void> addPickUp() {
-    final Timestamp dopTimestamp = Timestamp.fromDate(DateFormat('yyyy-MM-dd').parse(dopController.text));
+    final Timestamp dopTimestamp =
+        Timestamp.fromDate(DateFormat('yyyy-MM-dd').parse(dopController.text));
 
     return pickups
         .add({
-      'name': name,
-      'landingtime': landingtime,
-      'airport': airport,
-      'dop': dopTimestamp, // Set the dop as a Timestamp
-    })
+          'name': name,
+          'landingtime': landingtime,
+          'airport': airport,
+          'dop': dopTimestamp, // Set the dop as a Timestamp
+        })
         .then((value) => print('Pickup Added'))
         .catchError((error) => print('Failed to Add pickup: $error'));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,7 +160,6 @@ class _FlightCalState extends State<FlightCal> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
-
             children: [
               Container(
                 alignment: Alignment.center,
@@ -178,66 +188,121 @@ class _FlightCalState extends State<FlightCal> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                
-                      TextField(
-                         controller: nameController,
+                      TextFormField(
+                        controller: nameController,
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.cyan,
                         decoration: InputDecoration(
-                
-                
-                          labelStyle:
-                          TextStyle(color: Colors.white), // Change label color
-                
+                          labelStyle: TextStyle(
+                              color: Colors.white), // Change label color
+
                           labelText: 'Enter the Name',
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 20), // Add spacing between fields
-                      TextField(
+                      TextFormField(
                         controller: dopController,
                         readOnly: true,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          labelStyle:
-                          TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white),
                           labelText: 'Set pickup Date',
-                          suffixIcon: Icon(Icons.calendar_today,color: Colors.white,),
+                          suffixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Colors.white,
+                          ),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter date';
+                          }
+                          return null;
+                        },
                         onTap: () => pickDate(context),
                       ),
                       SizedBox(height: 20),
-                      TextField(
+                      TextFormField(
                         controller: landingtimeController,
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.cyan,
                         decoration: InputDecoration(
-
-
-                          labelStyle:
-                          TextStyle(color: Colors.white), // Change label color
+                          labelStyle: TextStyle(
+                              color: Colors.white), // Change label color
 
                           labelText: 'Enter Flight Landing Time',
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter landing time';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 20),
-                      TextField(
+                      TextFormField(
                         controller: airportController,
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.cyan,
                         decoration: InputDecoration(
-                
-                
-                          labelStyle:
-                          TextStyle(color: Colors.white), // Change label color
-                
+                          labelStyle: TextStyle(
+                              color: Colors.white), // Change label color
+
                           labelText: 'Airport Location',
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter airport name';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 20), // Add spacing between fields
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0),
                         child: GestureDetector(
                           onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+
+
+                           return AlertDialog(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 0, 0, 0),
+                                    scrollable: true,
+                                    content: Column(
+                                      children: [
+                                        Text(
+                                          "Pickup request has been sent",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              // Validate returns true if the form is valid, otherwise false.
+
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomePage()));
+                                            },
+                                            child: Text("Back to home"))
+                                      ],
+                                    ),
+                                  );
+                                });
+
                             // Validate returns true if the form is valid, otherwise false.
                             if (_formKey.currentState!.validate()) {
                               setState(() {
@@ -246,6 +311,7 @@ class _FlightCalState extends State<FlightCal> {
                                 landingtime = landingtimeController.text;
                                 airport = airportController.text;
                                 addPickUp();
+                                clearText();
                               });
                             }
                             // Navigator.push(context,
@@ -274,8 +340,6 @@ class _FlightCalState extends State<FlightCal> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),

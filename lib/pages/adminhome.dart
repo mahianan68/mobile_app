@@ -3,6 +3,7 @@ import 'package:mobile_app/auth/login_page.dart';
 import 'package:mobile_app/pages/addfaq.dart';
 import 'package:mobile_app/pages/eventcal.dart';
 import 'package:mobile_app/pages/faq2.dart';
+import 'package:mobile_app/pages/pickupreq.dart';
 
 import '../auth/authmain.dart';
 import 'add_event.dart';
@@ -77,9 +78,10 @@ class _AhomeState extends State<Ahome> {
                           MaterialPageRoute(builder: (context) => StudentList()));
                     },
                     child: Container(
+
                       margin: EdgeInsets.only(bottom: 10),
                       padding: EdgeInsets.only(left: 20),
-                      height: 120,
+                      height: 80,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
                         borderRadius: BorderRadius.only(
@@ -92,19 +94,22 @@ class _AhomeState extends State<Ahome> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Student List',
-                            style: TextStyle(
-                              fontSize: 25,
+                          Container(
+                            width: 250,
+                            child: Text(
+                              'Student List',
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
                             ),
                           ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/slist.png",
+                              height: 60,
                             ),
                           ),
+                          SizedBox(width: 5,)
                         ],
                       ),
                     ),
@@ -121,7 +126,7 @@ class _AhomeState extends State<Ahome> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
                       margin: EdgeInsets.only(bottom: 10),
-                      height: 120,
+                      height: 80,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
                         borderRadius: BorderRadius.only(
@@ -146,10 +151,11 @@ class _AhomeState extends State<Ahome> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/event.png",
+                              height: 60,
                             ),
                           ),
+                          SizedBox(width: 5,)
                         ],
                       ),
                     ),
@@ -162,7 +168,7 @@ class _AhomeState extends State<Ahome> {
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
                       margin: EdgeInsets.only(bottom: 10),
-                      height: 120,
+                      height: 80,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
                         borderRadius: BorderRadius.only(
@@ -178,7 +184,7 @@ class _AhomeState extends State<Ahome> {
                           Container(
                             width: 250,
                             child: Text(
-                              'Query',
+                              'Student Query',
                               style: TextStyle(
                                 fontSize: 25,
                               ),
@@ -187,10 +193,11 @@ class _AhomeState extends State<Ahome> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/que.png",
+                              height: 60,
                             ),
                           ),
+                          SizedBox(width: 5,)
                         ],
                       ),
                     ),
@@ -202,7 +209,8 @@ class _AhomeState extends State<Ahome> {
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 20),
-                      height: 120,
+                      margin: EdgeInsets.only(bottom: 10),
+                      height: 80,
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 216, 0),
                         borderRadius: BorderRadius.only(
@@ -227,10 +235,52 @@ class _AhomeState extends State<Ahome> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(25.0),
                             child: Image.asset(
-                              "assets/intro/intropic.png",
-                              height: 100,
+                              "assets/images/addfaq.png",
+                              height: 60,
                             ),
                           ),
+                          SizedBox(width: 5,)
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => PickupReq()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20),
+                      height: 80,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 255, 216, 0),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          topLeft: Radius.circular(0),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              'Pick Up Requests',
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(25.0),
+                            child: Image.asset(
+                              "assets/images/pickup.png",
+                              height: 60,
+                            ),
+                          ),
+                          SizedBox(width: 5,)
                         ],
                       ),
                     ),

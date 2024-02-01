@@ -90,6 +90,10 @@ flutter:
     - assets/images/visa.png
     - assets/images/wapp.png
     - assets/images/emgs.png
+    - assets/images/addfaq.png
+    - assets/images/slist.png
+    - assets/images/pickup.png
+    - assets/images/que.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
